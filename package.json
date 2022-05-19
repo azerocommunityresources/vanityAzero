@@ -1,0 +1,33 @@
+{
+  "name": "vanityazero",
+  "version": "1.0.0",
+  "description": "Wallet address generator for azero",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azerocommunityresources/vanityAzero.git"
+  },
+  "keywords": [
+    "crypto",
+    "wallets",
+    "aleph",
+    "zero"
+  ],
+  "author": "Harsh Munshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/azerocommunityresources/vanityAzero/issues"
+  },
+  "homepage": "https://github.com/azerocommunityresources/vanityAzero#readme",
+  "dependencies": {
+    "@nestjs/swagger": "^5.2.1",
+    "@polkadot/ui-keyring": "^2.2.1",
+    "@polkadot/util-crypto": "^9.2.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "swagger-ui-express": "^4.4.0"
+  }
+}
