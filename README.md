@@ -1,2 +1,4 @@
 # vanityAzero
-A service to generate mnemonic and addresses for new accounts.
+An API service to generate mnemonic and addresses for new Aleph Zero accounts.
+
+# 
