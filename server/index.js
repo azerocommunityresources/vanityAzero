@@ -2,7 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
-const { mnemonicGenerate, cryptoWaitReady, randomAsHex } = require("@polkadot/util-crypto");
+const {
+  mnemonicGenerate,
+  cryptoWaitReady,
+  randomAsHex,
+} = require("@polkadot/util-crypto");
 const { keyring } = require("@polkadot/ui-keyring");
 const assert = require("assert");
 
@@ -156,7 +160,6 @@ app.post("/generate_address", (req, res) => {
   }
 });
 
-
 /**
  * @swagger
  *  /generate_address_mnemonic:
@@ -201,7 +204,6 @@ app.post("/generate_address_mnemonic", (req, res) => {
     res.status(404).send("check if the input are not empty");
   }
 });
-
 
 /**
  * @swagger
