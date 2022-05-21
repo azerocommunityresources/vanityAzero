@@ -16,6 +16,9 @@ const PORT = process.env.PORT || 3001;
 // Deining the app
 const app = express();
 
+// setup the app to accept json
+app.use(express.json());
+
 // swagger options
 const swaggerOptions = {
   swaggerDefinition: {
@@ -87,11 +90,19 @@ app.post("/test_params", (req, res) => {
  *  /generate_mnemonic:
  *  post:
  *      description: create an endpoint to generate the mnemonic
+ *      consumes:
+ *        - application/json
  *      parameters:
- *          - in: query
- *            name: words
- *            schema:
- *              type: integer
+ *        - in: body
+ *          name: words
+ *          description: metadata to generate mnemonic
+ *          schema:
+ *            type: object
+ *            required:
+ *              - words
+ *            properties:
+ *              words:
+ *                type: integer
  *      responses:
  *          200:
  *              description: Success
@@ -100,7 +111,7 @@ app.post("/test_params", (req, res) => {
  */
 app.post("/generate_mnemonic", (req, res) => {
   // generate the mnemonic
-  const nWords = parseInt(req.query.words);
+  const nWords = parseInt(req.body.words);
   try {
     assert(nWords !== 0);
     assert(nWords === 12 || nWords === 24);
@@ -116,19 +127,25 @@ app.post("/generate_mnemonic", (req, res) => {
  *  /generate_address:
  *  post:
  *      description: create a wallet address using the mnemonic, ID and password
+ *      consumes:
+ *        - application/json
  *      parameters:
- *          - in: query
- *            name: accountName
- *            schema:
- *              type: string
- *          - in: query
- *            name: password
- *            schema:
- *              type: string
- *          - in: query
- *            name: mnemonic
- *            schema:
- *              type: json
+ *        - in: body
+ *          name: words
+ *          description: metadata to generate mnemonic
+ *          schema:
+ *            type: object
+ *            required:
+ *              - accountName
+ *              - password
+ *              - mnemonic
+ *            properties:
+ *              accountName:
+ *                type: string
+ *              password:
+ *                type: string
+ *              mnemonic:
+ *                type: string
  *      responses:
  *          200:
  *              description: Success
@@ -137,11 +154,11 @@ app.post("/generate_mnemonic", (req, res) => {
  */
 app.post("/generate_address", (req, res) => {
   // check for account ID, password and mnemonic
-  const accoutName = req.query.accountName;
-  const password = req.query.password;
+  const accoutName = req.body.accountName;
+  const password = req.body.password;
 
   // mnemonic is parsed as a json from the /generate_mnemonic endpoint
-  const mnemonic = req.query.mnemonic;
+  const mnemonic = req.body.mnemonic;
 
   // sample testing
   console.log(mnemonic, accoutName, password);
@@ -164,16 +181,23 @@ app.post("/generate_address", (req, res) => {
  * @swagger
  *  /generate_address_mnemonic:
  *  post:
- *      description: create a new wallet address using the username and password (mnemonic generated within). Key requirement for wallets.
+ *      description: create a wallet address using the mnemonic, ID and password
+ *      consumes:
+ *        - application/json
  *      parameters:
- *          - in: query
- *            name: accountName
- *            schema:
- *              type: string
- *          - in: query
- *            name: password
- *            schema:
- *              type: string
+ *        - in: body
+ *          name: words
+ *          description: metadata to generate mnemonic
+ *          schema:
+ *            type: object
+ *            required:
+ *              - accountName
+ *              - password
+ *            properties:
+ *              accountName:
+ *                type: string
+ *              password:
+ *                type: string
  *      responses:
  *          200:
  *              description: Success
@@ -182,8 +206,8 @@ app.post("/generate_address", (req, res) => {
  */
 app.post("/generate_address_mnemonic", (req, res) => {
   // check for account ID, password and mnemonic
-  const accoutName = req.query.accountName;
-  const password = req.query.password;
+  const accoutName = req.body.accountName;
+  const password = req.body.password;
 
   // generate a mnemonic with hardcoded
   const nWords = 12;
@@ -209,16 +233,23 @@ app.post("/generate_address_mnemonic", (req, res) => {
  * @swagger
  *  /generate_address_hex:
  *  post:
- *      description: create a new wallet address using the username and password (random hex initialization). Key requirement for wallets.
+ *      description: create a wallet address using the mnemonic, ID and password
+ *      consumes:
+ *        - application/json
  *      parameters:
- *          - in: query
- *            name: accountName
- *            schema:
- *              type: string
- *          - in: query
- *            name: password
- *            schema:
- *              type: string
+ *        - in: body
+ *          name: words
+ *          description: metadata to generate mnemonic
+ *          schema:
+ *            type: object
+ *            required:
+ *              - accountName
+ *              - password
+ *            properties:
+ *              accountName:
+ *                type: string
+ *              password:
+ *                type: string
  *      responses:
  *          200:
  *              description: Success
@@ -227,8 +258,8 @@ app.post("/generate_address_mnemonic", (req, res) => {
  */
 app.post("/generate_address_hex", (req, res) => {
   // check for account ID, password and mnemonic
-  const accoutName = req.query.accountName;
-  const password = req.query.password;
+  const accoutName = req.body.accountName;
+  const password = req.body.password;
 
   // generate a seed with hardcoded bytes
   const nBytes = 32;
