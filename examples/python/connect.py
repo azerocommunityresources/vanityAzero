@@ -9,10 +9,9 @@ def ping_service(payload, method: str, endpoint: str):
     headers = {
         'accept': 'application/json'
     }
-
     # bunch of conditions to check the type of method
     if method == "post":
-        res = requests.post(url=url + endpoint, payload=payload)
+        res = requests.post(url=url + endpoint, headers=headers, json=payload)
     elif method == "get":
         res = requests.get(url=url + endpoint)
     else:
