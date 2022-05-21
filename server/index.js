@@ -2,7 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
-const { mnemonicGenerate, cryptoWaitReady } = require("@polkadot/util-crypto");
+const {
+  mnemonicGenerate,
+  cryptoWaitReady,
+  randomAsHex,
+} = require("@polkadot/util-crypto");
 const { keyring } = require("@polkadot/ui-keyring");
 const assert = require("assert");
 
@@ -148,6 +152,96 @@ app.post("/generate_address", (req, res) => {
 
     // add the account, encrypt the stored JSON with an account-specific password
     const { pair, json } = keyring.addUri(mnemonic, password, {
+      name: accoutName,
+    });
+    res.json({ keystore: json });
+  } catch {
+    res.status(404).send("check if the input are not empty");
+  }
+});
+
+/**
+ * @swagger
+ *  /generate_address_mnemonic:
+ *  post:
+ *      description: create a new wallet address using the username and password (mnemonic generated within). Key requirement for wallets.
+ *      parameters:
+ *          - in: query
+ *            name: accountName
+ *            schema:
+ *              type: string
+ *          - in: query
+ *            name: password
+ *            schema:
+ *              type: string
+ *      responses:
+ *          200:
+ *              description: Success
+ *          404:
+ *              description: none of the fields should be empty
+ */
+app.post("/generate_address_mnemonic", (req, res) => {
+  // check for account ID, password and mnemonic
+  const accoutName = req.query.accountName;
+  const password = req.query.password;
+
+  // generate a mnemonic with hardcoded
+  const nWords = 12;
+  const mnemonic = mnemonicGenerate(nWords);
+
+  try {
+    // some test cases
+    assert(typeof accoutName !== undefined);
+    assert(typeof password !== undefined);
+    assert(typeof mnemonic !== undefined);
+
+    // add the account, encrypt the stored JSON with an account-specific password
+    const { pair, json } = keyring.addUri(mnemonic, password, {
+      name: accoutName,
+    });
+    res.json({ keystore: json });
+  } catch {
+    res.status(404).send("check if the input are not empty");
+  }
+});
+
+/**
+ * @swagger
+ *  /generate_address_hex:
+ *  post:
+ *      description: create a new wallet address using the username and password (random hex initialization). Key requirement for wallets.
+ *      parameters:
+ *          - in: query
+ *            name: accountName
+ *            schema:
+ *              type: string
+ *          - in: query
+ *            name: password
+ *            schema:
+ *              type: string
+ *      responses:
+ *          200:
+ *              description: Success
+ *          404:
+ *              description: none of the fields should be empty
+ */
+app.post("/generate_address_hex", (req, res) => {
+  // check for account ID, password and mnemonic
+  const accoutName = req.query.accountName;
+  const password = req.query.password;
+
+  // generate a seed with hardcoded bytes
+  const nBytes = 32;
+  const seed = randomAsHex(nBytes);
+
+  try {
+    // some test cases
+    assert(typeof accoutName !== undefined);
+    assert(typeof password !== undefined);
+    assert(typeof mnemonic !== undefined);
+
+    // add the account, encrypt the stored JSON with an account-specific password
+    const { pair, json } = keyring.addUri(seed, password, {
       name: accoutName,
     });
     res.json({ keystore: json });

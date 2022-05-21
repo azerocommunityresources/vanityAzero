@@ -4,8 +4,7 @@ An API service to generate mnemonic and addresses for new Aleph Zero accounts.
 # Roadmap
 - [x] Basic test API
 - [x] Generate mnemonic API
-- [ ] Generate address API
-- [ ] Generate wallet API
+- [x] Generate address API
 - [ ] keyring pair API (for dex)
 - [x] Swagger UI support
 - [x] Docker integration for pre-prod / prod env
