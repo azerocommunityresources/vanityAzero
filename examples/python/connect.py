@@ -19,9 +19,34 @@ def ping_service(payload, method: str, endpoint: str):
     return res
 
 if __name__=="__main__":
-    # 1. Method to geneate mnemonic
+    # 1. Method to generate mnemonic
     payload = {
         "words" : 12
     }
     res = ping_service(payload=payload, method="post", endpoint="generate_mnemonic")
     print(res.json())
+
+    # 2. Method to generate address with mnemonic
+    payload = {
+        "userName" : "sampleUser",
+        "password": "myStrongP@ssword",
+        "mnemonic": res.json()["mnemonic"]
+    }
+    res = ping_service(payload=payload, method="post", endpoint="generate_address")
+    print(f"generated address (w/ mnemonic) : {res.json()['keystore']['address']}")
+
+    # 3. Method to generate address (without mnemonic)
+    payload = {
+        "userName" : "sampleUser",
+        "password": "myStrongP@ssword"
+    }
+    res = ping_service(payload=payload, method="post", endpoint="generate_address_mnemonic")
+    print(f"generated address (automated) : {res.json()['keystore']['address']}")
+
+    # 4. Method to generate address with hex (not preferred)
+    payload = {
+        "userName" : "sampleUser",
+        "password": "myStrongP@ssword"
+    }
+    res = ping_service(payload=payload, method="post", endpoint="generate_address_hex")
+    print(f"generated address (automated hex) : {res.json()['keystore']['address']}")
