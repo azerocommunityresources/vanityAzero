@@ -1,4 +1,3 @@
-from heapq import merge
 import requests
 import json
 
