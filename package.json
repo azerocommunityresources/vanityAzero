@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/index.js"
-
   },
   "repository": {
     "type": "git",
@@ -30,6 +29,7 @@
     "@polkadot/util-crypto": "^9.2.1",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "node-fetch": "^3.2.4",
     "nodemon": "^2.0.16",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0"
