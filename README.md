@@ -5,11 +5,11 @@ An API service to generate mnemonic and addresses for new Aleph Zero accounts.
 - [x] Basic test API
 - [x] Generate mnemonic API
 - [x] Generate address API
-- [ ] keyring pair API (for dex)
+- [x] keyring pair API (for dex)
 - [x] Swagger UI support
 - [x] Docker integration for pre-prod / prod env
-- [ ] Python, JS, Rust examples for API use
-- [ ] TBD
+- [x] Python, JS, Rust examples for API use
+
 
 # Installation and Testing Guide
 
