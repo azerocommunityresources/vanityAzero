@@ -1,21 +1,18 @@
-#[macro_use]
-extern crate fstrings;
 use reqwest;
-
-// define structs for data types to be use
-struct message {
-    words: u8
-}
-
-fn ping_service(payload: message, method: , endpoint) {
-    // define the host, port and url
-    let host = "localhost";
-    let port = 3001;
-    let url = f!("http://{host}:{port}/");
-}
+use std::collections::HashMap;
 
 
-fn main() {
-    
-    println!("{}", url);
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let resp: serde_json::Value = reqwest::Client::new()
+        .post("http://localhost:3001/generate_mnemonic")
+        .json(&serde_json::json!({
+            "words": 12,
+        }))
+        .send()
+        .await?
+        .json()
+        .await?;
+    println!("{:#?}", resp);
+    Ok(())
 }
