@@ -51,4 +51,8 @@ $ docker build -t vazero .
 $ docker run --rm -it  -p 127.0.0.1:3001:3001 vazero
 ```
 
+## Documentation
+
+The documentation can be found at ```http://localhost.com/api-docs```
+
 **NOTE:** Please do not forget to port forward your container localhost.
